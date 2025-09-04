@@ -48,7 +48,7 @@ export default function RegionAnalysisChart() {
         <YAxis 
           tickLine={false}
           tick={{ fontSize: 10 }}
-          label={{ value: 'Missing Rate (%)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
+          label={{ value: 'Taxa de Faltas (%)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
         />
         <Tooltip 
           content={({ active, payload, label }) => {

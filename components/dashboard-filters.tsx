@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -19,10 +18,10 @@ export default function DashboardFilters({ onFiltersChange, currentFilters }: Da
 
   const regions = ['Orlando', 'Kissimmee', 'Winter Park', 'Sanford', 'Altamonte Springs', 'Apopka', 'Clermont'];
   const clusters = [
-    { id: 0, name: 'Moderate Risk' },
-    { id: 1, name: 'Top Performers' }, 
-    { id: 2, name: 'Novice Drivers' },
-    { id: 3, name: 'High Risk' }
+    { id: 0, name: 'Risco Moderado' },
+    { id: 1, name: 'Melhores Desempenhos' }, 
+    { id: 2, name: 'Motoristas Novatos' },
+    { id: 3, name: 'Alto Risco' }
   ];
 
   const handleRegionChange = (region: string) => {
@@ -69,13 +68,13 @@ export default function DashboardFilters({ onFiltersChange, currentFilters }: Da
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Filter className="w-4 h-4 text-blue-600" />
-            <span className="font-medium text-gray-900">Filters</span>
+            <span className="font-medium text-gray-900">Filtros</span>
             {hasActiveFilters && (
               <Badge variant="secondary" className="bg-blue-100 text-blue-800">
                 {(currentFilters?.regions?.length || 0) + 
                  (currentFilters?.driverClusters?.length || 0) +
                  (currentFilters?.minMissingRate !== undefined ? 1 : 0) +
-                 (currentFilters?.maxMissingRate !== undefined ? 1 : 0)} active
+                 (currentFilters?.maxMissingRate !== undefined ? 1 : 0)} ativos
               </Badge>
             )}
           </div>
@@ -88,7 +87,7 @@ export default function DashboardFilters({ onFiltersChange, currentFilters }: Da
                 className="text-blue-600 hover:bg-blue-100"
               >
                 <RotateCcw className="w-3 h-3 mr-1" />
-                Clear All
+                Limpar Tudo
               </Button>
             )}
             <Button 
@@ -97,7 +96,7 @@ export default function DashboardFilters({ onFiltersChange, currentFilters }: Da
               onClick={() => setIsExpanded(!isExpanded)}
               className="text-blue-600 hover:bg-blue-100"
             >
-              {isExpanded ? 'Hide' : 'Show'} Filters
+              {isExpanded ? 'Ocultar' : 'Mostrar'} Filtros
             </Button>
           </div>
         </div>
@@ -106,13 +105,13 @@ export default function DashboardFilters({ onFiltersChange, currentFilters }: Da
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Region Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Regions</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Regiões</label>
               <Select onValueChange={handleRegionChange}>
                 <SelectTrigger className="bg-white">
-                  <SelectValue placeholder="Select regions" />
+                  <SelectValue placeholder="Selecione as regiões" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Regions</SelectItem>
+                  <SelectItem value="all">Todas as Regiões</SelectItem>
                   {regions?.map(region => (
                     <SelectItem key={region} value={region}>
                       {region} {currentFilters?.regions?.includes(region) && '✓'}
@@ -139,13 +138,13 @@ export default function DashboardFilters({ onFiltersChange, currentFilters }: Da
 
             {/* Cluster Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Driver Clusters</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Clusters de Motoristas</label>
               <Select onValueChange={handleClusterChange}>
                 <SelectTrigger className="bg-white">
-                  <SelectValue placeholder="Select clusters" />
+                  <SelectValue placeholder="Selecione os clusters" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Clusters</SelectItem>
+                  <SelectItem value="all">Todos os Clusters</SelectItem>
                   {clusters?.map(cluster => (
                     <SelectItem key={cluster.id} value={cluster.id.toString()}>
                       {cluster.name} {currentFilters?.driverClusters?.includes(cluster.id) && '✓'}

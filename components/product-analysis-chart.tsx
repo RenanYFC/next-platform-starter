@@ -1,8 +1,8 @@
-
 'use client';
 
 import { useWalmartData } from '@/hooks/use-walmart-data';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { translateCategory, translateProduct } from '@/lib/translations';
 
 interface ProductAnalysisChartProps {
   type?: 'categories' | 'top-products';
@@ -14,7 +14,7 @@ export default function ProductAnalysisChart({ type = 'categories' }: ProductAna
   if (loading) {
     return (
       <div className="w-full h-80 bg-gray-100 rounded-lg animate-pulse flex items-center justify-center">
-        <div className="text-gray-500">Loading chart...</div>
+        <div className="text-gray-500">Carregando gráfico...</div>
       </div>
     );
   }
@@ -24,16 +24,10 @@ export default function ProductAnalysisChart({ type = 'categories' }: ProductAna
   const colors = ['#60B5FF', '#FF9149', '#FF9898', '#FF90BB', '#FF6363', '#80D8C3', '#A19AD3', '#72BF78'];
 
   if (type === 'categories') {
-    // Group by category
-    const categoryStats = data?.products?.reduce((acc: any, product) => {
+    const categoryStats = data.products.reduce((acc: any, product) => {
       const category = product?.category || 'Unknown';
       if (!acc[category]) {
-        acc[category] = { 
-          category,
-          missing: 0, 
-          value: 0,
-          count: 0
-        };
+        acc[category] = { category, missing: 0, value: 0, count: 0 };
       }
       acc[category].missing += product?.missing_count || 0;
       acc[category].value += product?.total_value_lost || 0;
@@ -56,11 +50,12 @@ export default function ProductAnalysisChart({ type = 'categories' }: ProductAna
             angle={-45}
             textAnchor="end"
             height={60}
+            tickFormatter={(value) => translateCategory(value)}
           />
           <YAxis 
             tickLine={false}
             tick={{ fontSize: 10 }}
-            label={{ value: 'Missing Items', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
+            label={{ value: 'Itens Faltantes', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
           />
           <Tooltip 
             content={({ active, payload, label }) => {
@@ -68,10 +63,10 @@ export default function ProductAnalysisChart({ type = 'categories' }: ProductAna
                 const data = payload[0].payload;
                 return (
                   <div className="bg-white p-3 rounded-lg shadow-lg border">
-                    <p className="font-medium">{label}</p>
-                    <p className="text-sm text-red-600">{data?.missing} missing items</p>
+                    <p className="font-medium">{translateCategory(label)}</p>
+                    <p className="text-sm text-red-600">{data?.missing} itens faltantes</p>
                     <p className="text-sm text-gray-600">
-                      Value Lost: ${(data?.value || 0).toLocaleString()}
+                      Valor Perdido: {(data?.value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                     </p>
                   </div>
                 );
@@ -80,7 +75,7 @@ export default function ProductAnalysisChart({ type = 'categories' }: ProductAna
             }}
           />
           <Bar dataKey="missing" radius={[4, 4, 0, 0]}>
-            {categoryData?.map((entry, index) => (
+            {categoryData?.map((entry: any, index: number) => (
               <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Bar>
@@ -90,18 +85,23 @@ export default function ProductAnalysisChart({ type = 'categories' }: ProductAna
   }
 
   if (type === 'top-products') {
-    const topProducts = data?.products
+    const topProducts = data.products
       ?.sort((a, b) => (b?.missing_count || 0) - (a?.missing_count || 0))
       ?.slice(0, 10)
-      ?.map((product, index) => ({
-        name: product?.product_name?.length > 20 
-          ? product?.product_name?.substring(0, 20) + '...'
-          : product?.product_name,
-        missing: product?.missing_count || 0,
-        value: product?.total_value_lost || 0,
-        category: product?.category,
-        fill: colors[index % colors.length]
-      }));
+      ?.map((product, index) => {
+        // CORREÇÃO APLICADA AQUI
+        const translatedName = translateProduct(product?.product_name);
+        return {
+          name: translatedName.length > 20 
+            ? translatedName.substring(0, 20) + '...'
+            : translatedName,
+          originalName: translatedName, // Passa o nome completo traduzido
+          missing: product?.missing_count || 0,
+          value: product?.total_value_lost || 0,
+          category: product?.category,
+          fill: colors[index % colors.length]
+        };
+      });
 
     return (
       <ResponsiveContainer width="100%" height={300}>
@@ -119,7 +119,7 @@ export default function ProductAnalysisChart({ type = 'categories' }: ProductAna
           <YAxis 
             tickLine={false}
             tick={{ fontSize: 10 }}
-            label={{ value: 'Missing Count', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
+            label={{ value: 'Contagem de Faltas', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
           />
           <Tooltip 
             content={({ active, payload, label }) => {
@@ -127,11 +127,12 @@ export default function ProductAnalysisChart({ type = 'categories' }: ProductAna
                 const data = payload[0].payload;
                 return (
                   <div className="bg-white p-3 rounded-lg shadow-lg border">
-                    <p className="font-medium">{label}</p>
-                    <p className="text-sm text-gray-600">{data?.category}</p>
-                    <p className="text-sm text-red-600">{data?.missing} missing items</p>
+                    {/* CORREÇÃO AQUI para usar o nome completo traduzido */}
+                    <p className="font-medium">{data?.originalName}</p>
+                    <p className="text-sm text-gray-600">{translateCategory(data?.category)}</p>
+                    <p className="text-sm text-red-600">{data?.missing} itens faltantes</p>
                     <p className="text-sm text-green-600">
-                      Value: ${(data?.value || 0).toFixed(0)}
+                      Valor: {(data?.value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                     </p>
                   </div>
                 );

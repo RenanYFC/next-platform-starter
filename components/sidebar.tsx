@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -13,11 +12,11 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
-  TrendingUp,
   AlertTriangle,
   BarChart3
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useWalmartData } from '@/hooks/use-walmart-data';
 
 const navItems = [
   {
@@ -61,6 +60,10 @@ const navItems = [
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
+  const { data, loading } = useWalmartData();
+
+  // LÓGICA CORRIGIDA: Inclui motoristas do Cluster 3 OU que são outliers
+  const highRiskDriverCount = data?.drivers?.filter(d => d.cluster === 3 || d.is_outlier).length || 0;
 
   return (
     <div className={cn(
@@ -125,10 +128,10 @@ export default function Sidebar() {
           <div className="bg-blue-800 rounded-lg p-3 border border-blue-600">
             <div className="flex items-center space-x-2 mb-2">
               <AlertTriangle className="w-4 h-4 text-yellow-400" />
-              <span className="text-white font-medium text-xs">Critical Alert</span>
+              <span className="text-white font-medium text-xs">Alerta Crítico</span>
             </div>
             <p className="text-blue-100 text-xs">
-              17 high-risk drivers identified requiring immediate action
+              {loading ? 'Calculando...' : `${highRiskDriverCount} motoristas de alto risco identificados que requerem ação imediata`}
             </p>
           </div>
         </div>

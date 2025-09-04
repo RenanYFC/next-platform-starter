@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useWalmartData } from '@/hooks/use-walmart-data';
@@ -14,7 +13,7 @@ export default function DriverPerformanceChart({ type = 'cluster' }: DriverPerfo
   if (loading) {
     return (
       <div className="w-full h-80 bg-gray-100 rounded-lg animate-pulse flex items-center justify-center">
-        <div className="text-gray-500">Loading chart...</div>
+        <div className="text-gray-500">Carregando gráfico...</div>
       </div>
     );
   }
@@ -30,10 +29,10 @@ export default function DriverPerformanceChart({ type = 'cluster' }: DriverPerfo
         : 0;
       
       const descriptions = [
-        "Moderate Risk",
-        "Top Performers", 
-        "Novice Drivers",
-        "High Risk"
+        "Risco Moderado",
+        "Melhores Desempenhos", 
+        "Motoristas Novatos",
+        "Alto Risco"
       ];
 
       return {
@@ -58,7 +57,7 @@ export default function DriverPerformanceChart({ type = 'cluster' }: DriverPerfo
           <YAxis 
             tickLine={false}
             tick={{ fontSize: 10 }}
-            label={{ value: 'Missing Rate (%)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
+            label={{ value: 'Taxa de Faltas (%)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
           />
           <Tooltip 
             content={({ active, payload, label }) => {
@@ -67,9 +66,9 @@ export default function DriverPerformanceChart({ type = 'cluster' }: DriverPerfo
                 return (
                   <div className="bg-white p-3 rounded-lg shadow-lg border">
                     <p className="font-medium">{label}</p>
-                    <p className="text-sm text-gray-600">{data?.drivers} drivers</p>
+                    <p className="text-sm text-gray-600">{data?.drivers} motoristas</p>
                     <p className="text-sm text-blue-600">
-                      Avg Missing Rate: {data?.avgMissingRate?.toFixed(1)}%
+                      Taxa Média de Faltas: {data?.avgMissingRate?.toFixed(1)}%
                     </p>
                   </div>
                 );
@@ -114,7 +113,7 @@ export default function DriverPerformanceChart({ type = 'cluster' }: DriverPerfo
           <YAxis 
             tickLine={false}
             tick={{ fontSize: 10 }}
-            label={{ value: 'Missing Items', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
+            label={{ value: 'Itens Faltantes', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11 } }}
           />
           <Tooltip 
             content={({ active, payload, label }) => {
@@ -123,9 +122,9 @@ export default function DriverPerformanceChart({ type = 'cluster' }: DriverPerfo
                 return (
                   <div className="bg-white p-3 rounded-lg shadow-lg border">
                     <p className="font-medium">{label}</p>
-                    <p className="text-sm text-red-600">{data?.missing} missing items</p>
-                    <p className="text-sm text-gray-600">{data?.trips} trips</p>
-                    <p className="text-sm text-orange-600">Rate: {data?.rate?.toFixed(1)}%</p>
+                    <p className="text-sm text-red-600">{data?.missing} itens faltantes</p>
+                    <p className="text-sm text-gray-600">{data?.trips} viagens</p>
+                    <p className="text-sm text-orange-600">Taxa: {data?.rate?.toFixed(1)}%</p>
                   </div>
                 );
               }

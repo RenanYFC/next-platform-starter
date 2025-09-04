@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -22,8 +21,8 @@ export default function EnhancedExecutiveSummary() {
     return (
       <main className="flex-1 p-6">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Executive Summary</h1>
-          <p className="text-gray-600">Loading comprehensive analysis...</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Resumo Executivo</h1>
+          <p className="text-gray-600">Carregando análise abrangente...</p>
         </div>
         <div className="animate-pulse">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -57,18 +56,18 @@ export default function EnhancedExecutiveSummary() {
 
   const criticalFindings = [
     {
-      title: "Driver Fraud Detection",
-      description: `${data?.drivers?.filter(d => d?.is_outlier)?.length || 0} drivers identified as statistical outliers with unusually high missing rates. All belong to high-risk cluster requiring immediate audit.`,
+      title: "Detecção de Fraude de Motoristas",
+      description: `${data?.drivers?.filter(d => d?.is_outlier)?.length || 0} motoristas identificados como outliers estatísticos com taxas de itens faltantes anormalmente altas. Todos pertencem ao cluster de alto risco que requer auditoria imediata.`,
       borderColor: "border-red-500"
     },
     {
-      title: "High-Value Target Categories",
-      description: `${getTopProductsByMissing(2)?.map(p => p?.category)?.join(' and ')} categories show highest missing rates with significant financial impact.`,
+      title: "Categorias Alvo de Alto Valor",
+      description: `As categorias ${getTopProductsByMissing(2)?.map(p => p?.category)?.join(' e ')} apresentam as maiores taxas de itens faltantes com impacto financeiro significativo.`,
       borderColor: "border-orange-500"
     },
     {
-      title: "Geographic Concentration",
-      description: `${data?.regions?.[0]?.region || 'Top region'} accounts for ${(((data?.regions?.[0]?.total_missing || 0) / (data?.drivers?.reduce((sum, d) => sum + (d?.total_missing || 0), 0) || 1)) * 100).toFixed(0)}% of all missing items.`,
+      title: "Concentração Geográfica",
+      description: `${data?.regions?.[0]?.region || 'A principal região'} representa ${(((data?.regions?.[0]?.total_missing || 0) / (data?.drivers?.reduce((sum, d) => sum + (d?.total_missing || 0), 0) || 1)) * 100).toFixed(0)}% de todos os itens faltantes.`,
       borderColor: "border-yellow-500"
     }
   ];
@@ -77,9 +76,9 @@ export default function EnhancedExecutiveSummary() {
     <main className="flex-1 p-6">
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Executive Summary</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Resumo Executivo</h1>
         <p className="text-gray-600">
-          Real-time analysis of delivery performance with interactive filtering and strategic recommendations
+          Análise em tempo real do desempenho de entregas com filtros interativos e recomendações estratégicas
         </p>
       </div>
 
@@ -100,7 +99,7 @@ export default function EnhancedExecutiveSummary() {
             <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
               <AlertTriangle className="w-5 h-5 text-red-600" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-900">Critical Findings</h2>
+            <h2 className="text-xl font-semibold text-gray-900">Descobertas Críticas</h2>
           </div>
           
           <div className="space-y-4">
@@ -115,10 +114,10 @@ export default function EnhancedExecutiveSummary() {
 
         {/* Performance Overview Chart */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Driver Risk Distribution</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Distribuição de Risco dos Motoristas</h2>
           <DriverPerformanceChart type="cluster" />
           <p className="text-sm text-gray-600 mt-3">
-            K-Means clustering identified 4 distinct driver profiles with clear risk separation.
+            A clusterização K-Means identificou 4 perfis distintos de motoristas com uma clara separação de risco.
           </p>
         </div>
       </div>
@@ -129,18 +128,18 @@ export default function EnhancedExecutiveSummary() {
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <div className="flex items-center space-x-3 mb-4">
             <Users className="w-5 h-5 text-red-600" />
-            <h2 className="text-xl font-semibold text-gray-900">Top Risk Drivers</h2>
+            <h2 className="text-xl font-semibold text-gray-900">Motoristas de Maior Risco</h2>
           </div>
           <div className="space-y-3">
             {getTopDriversByMissing()?.map((driver, index) => (
               <div key={index} className="flex items-center justify-between p-3 border border-red-200 bg-red-50 rounded-lg">
                 <div>
                   <p className="font-medium text-gray-900">{driver?.name}</p>
-                  <p className="text-sm text-gray-600">{driver?.trips} trips completed</p>
+                  <p className="text-sm text-gray-600">{driver?.trips} viagens concluídas</p>
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-red-600">{driver?.missing_rate}</p>
-                  <p className="text-xs text-gray-500">{driver?.total_missing} items missing</p>
+                  <p className="text-xs text-gray-500">{driver?.total_missing} itens faltantes</p>
                 </div>
               </div>
             ))}
@@ -151,32 +150,32 @@ export default function EnhancedExecutiveSummary() {
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <div className="flex items-center space-x-3 mb-4">
             <TrendingUp className="w-5 h-5 text-blue-600" />
-            <h2 className="text-xl font-semibold text-gray-900">Live Analytics</h2>
+            <h2 className="text-xl font-semibold text-gray-900">Análises em Tempo Real</h2>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center p-3 bg-blue-50 rounded-lg">
               <div className="text-2xl font-bold text-blue-600 mb-1">
                 {data?.drivers?.length || 0}
               </div>
-              <div className="text-sm text-gray-600">Active Drivers</div>
+              <div className="text-sm text-gray-600">Motoristas Ativos</div>
             </div>
             <div className="text-center p-3 bg-green-50 rounded-lg">
               <div className="text-2xl font-bold text-green-600 mb-1">
                 {data?.regions?.length || 0}
               </div>
-              <div className="text-sm text-gray-600">Regions Monitored</div>
+              <div className="text-sm text-gray-600">Regiões Monitoradas</div>
             </div>
             <div className="text-center p-3 bg-orange-50 rounded-lg">
               <div className="text-2xl font-bold text-orange-600 mb-1">
                 {data?.products?.length || 0}
               </div>
-              <div className="text-sm text-gray-600">Product Lines</div>
+              <div className="text-sm text-gray-600">Linhas de Produto</div>
             </div>
             <div className="text-center p-3 bg-purple-50 rounded-lg">
               <div className="text-2xl font-bold text-purple-600 mb-1">
                 {data?.drivers?.filter(d => d?.cluster === 1)?.length || 0}
               </div>
-              <div className="text-sm text-gray-600">Top Performers</div>
+              <div className="text-sm text-gray-600">Melhores Desempenhos</div>
             </div>
           </div>
         </div>
@@ -189,24 +188,24 @@ export default function EnhancedExecutiveSummary() {
             <Clock className="w-6 h-6 text-blue-600" />
           </div>
           <div className="flex-1">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Immediate Actions Required</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">Ações Imediatas Necessárias</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white rounded-lg p-4 border border-blue-200">
-                <h3 className="font-medium text-gray-900 mb-1">Week 1</h3>
+                <h3 className="font-medium text-gray-900 mb-1">Semana 1</h3>
                 <p className="text-sm text-gray-600">
-                  Audit {data?.drivers?.filter(d => d?.is_outlier)?.length || 17} high-risk drivers and implement photo verification system
+                  Auditar {data?.drivers?.filter(d => d?.is_outlier)?.length || 17} motoristas de alto risco e implementar sistema de verificação por foto
                 </p>
               </div>
               <div className="bg-white rounded-lg p-4 border border-blue-200">
-                <h3 className="font-medium text-gray-900 mb-1">Week 2-3</h3>
+                <h3 className="font-medium text-gray-900 mb-1">Semanas 2-3</h3>
                 <p className="text-sm text-gray-600">
-                  Deploy enhanced verification for high-value items in {data?.regions?.slice(0, 3)?.map(r => r?.region)?.join(', ')}
+                  Implementar verificação aprimorada para itens de alto valor em {data?.regions?.slice(0, 3)?.map(r => r?.region)?.join(', ')}
                 </p>
               </div>
               <div className="bg-white rounded-lg p-4 border border-blue-200">
-                <h3 className="font-medium text-gray-900 mb-1">Month 1</h3>
+                <h3 className="font-medium text-gray-900 mb-1">Mês 1</h3>
                 <p className="text-sm text-gray-600">
-                  Launch real-time monitoring dashboard and customer flagging system
+                  Lançar dashboard de monitoramento em tempo real e sistema de sinalização de clientes
                 </p>
               </div>
             </div>

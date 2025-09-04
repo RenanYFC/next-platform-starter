@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -35,12 +34,12 @@ export default function InteractiveKPICards() {
       <div className="bg-red-50 border border-red-200 rounded-xl p-6 mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-red-800 font-medium">Error loading data</h3>
+            <h3 className="text-red-800 font-medium">Erro ao carregar os dados</h3>
             <p className="text-red-600 text-sm">{error}</p>
           </div>
           <Button onClick={refetch} variant="outline" size="sm">
             <RefreshCw className="w-4 h-4 mr-2" />
-            Retry
+            Tentar Novamente
           </Button>
         </div>
       </div>
@@ -50,9 +49,9 @@ export default function InteractiveKPICards() {
   if (!data) return null;
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'BRL',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(value);
@@ -67,36 +66,36 @@ export default function InteractiveKPICards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <KPICard
-        title="Overall Missing Rate"
+        title="Taxa Geral de Itens Faltantes"
         value={formatPercentage(data?.kpis?.overall_missing_rate || 0)}
-        change={`↑ ${((data?.kpis?.overall_missing_rate || 0) * 100 / 2.7).toFixed(1)}% from baseline`}
+        change={`↑ ${((data?.kpis?.overall_missing_rate || 0) * 100 / 2.7).toFixed(1)}% da linha de base`}
         changeType="negative"
         icon={TrendingDown}
-        description="Items not delivered per total items"
+        description="Itens não entregues por total de itens"
       />
       <KPICard
-        title="Financial Impact"
+        title="Impacto Financeiro"
         value={formatCurrency(data?.kpis?.total_financial_impact || 0)}
-        change="Estimated total value lost"
+        change="Valor total estimado perdido"
         changeType="negative"
         icon={DollarSign}
-        description="Total value of missing items"
+        description="Valor total dos itens faltantes"
       />
       <KPICard
-        title="High-Risk Drivers"
+        title="Motoristas de Alto Risco"
         value={data?.kpis?.high_risk_drivers?.toString() || '0'}
-        change="Immediate action required"
+        change="Ação imediata necessária"
         changeType="negative"
         icon={UserX}
-        description="Statistical outliers and high-risk cluster"
+        description="Outliers estatísticos e cluster de alto risco"
       />
       <KPICard
-        title="Critical Regions"
+        title="Regiões Críticas"
         value={data?.kpis?.critical_regions?.toString() || '0'}
-        change={criticalRegions || 'Multiple regions affected'}
+        change={criticalRegions || 'Múltiplas regiões afetadas'}
         changeType="neutral"
         icon={MapPin}
-        description="Highest incident concentration"
+        description="Maior concentração de incidentes"
       />
     </div>
   );

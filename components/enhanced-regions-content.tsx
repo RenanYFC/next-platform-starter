@@ -109,7 +109,7 @@ export default function EnhancedRegionsContent() {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Análise da Taxa de Faltas por Região</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Análise da Taxa de Perdas por Região</h2>
           <RegionAnalysisChart />
         </div>
 

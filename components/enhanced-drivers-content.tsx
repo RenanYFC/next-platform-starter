@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -17,8 +16,8 @@ export default function EnhancedDriversContent() {
     return (
       <main className="flex-1 p-6">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Driver Performance Analysis</h1>
-          <p className="text-gray-600">Loading driver data...</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Análise de Desempenho dos Motoristas</h1>
+          <p className="text-gray-600">Carregando dados dos motoristas...</p>
         </div>
         <div className="animate-pulse">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -41,10 +40,10 @@ export default function EnhancedDriversContent() {
 
   const getClusterStats = () => {
     const clusters = [
-      { id: 0, name: 'Moderate Risk', color: 'bg-orange-500' },
-      { id: 1, name: 'Top Performers', color: 'bg-green-500' },
-      { id: 2, name: 'Novice Drivers', color: 'bg-yellow-500' },
-      { id: 3, name: 'High Risk', color: 'bg-red-500' }
+      { id: 0, name: 'Risco Moderado', color: 'bg-orange-500' },
+      { id: 1, name: 'Melhores Desempenhos', color: 'bg-green-500' },
+      { id: 2, name: 'Motoristas Novatos', color: 'bg-yellow-500' },
+      { id: 3, name: 'Alto Risco', color: 'bg-red-500' }
     ];
 
     return clusters?.map(cluster => {
@@ -68,9 +67,9 @@ export default function EnhancedDriversContent() {
   return (
     <main className="flex-1 p-6">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Driver Performance Analysis</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Análise de Desempenho dos Motoristas</h1>
         <p className="text-gray-600">
-          Real-time analysis of driver behavior patterns, risk clusters, and outlier detection
+          Análise em tempo real dos padrões de comportamento dos motoristas, clusters de risco e detecção de outliers
         </p>
       </div>
 
@@ -83,41 +82,41 @@ export default function EnhancedDriversContent() {
       {/* KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <KPICard
-          title="Total Active Drivers"
+          title="Total de Motoristas Ativos"
           value={data?.drivers?.length?.toString() || '0'}
           icon={Users}
-          description="Currently delivering in Florida"
+          description="Atualmente entregando na Flórida"
         />
         <KPICard
-          title="High-Risk Drivers"
+          title="Motoristas de Alto Risco"
           value={highRiskDrivers?.toString()}
-          change={`${((highRiskDrivers / (data?.drivers?.length || 1)) * 100).toFixed(0)}% of total drivers`}
+          change={`${((highRiskDrivers / (data?.drivers?.length || 1)) * 100).toFixed(0)}% do total de motoristas`}
           changeType="negative"
           icon={UserX}
-          description="Cluster 3 - Immediate attention needed"
+          description="Cluster 3 - Atenção imediata necessária"
         />
         <KPICard
-          title="Statistical Outliers"
+          title="Outliers Estatísticos"
           value={outliers?.toString()}
-          change="All in high-risk cluster"
+          change="Todos no cluster de alto risco"
           changeType="negative"
           icon={AlertCircle}
-          description=">3 std dev above mean"
+          description=">3 desvios padrão acima da média"
         />
         <KPICard
-          title="Top Performers"
+          title="Melhores Desempenhos"
           value={topPerformers?.toString()}
-          change={`${((topPerformers / (data?.drivers?.length || 1)) * 100).toFixed(0)}% of total drivers`}
+          change={`${((topPerformers / (data?.drivers?.length || 1)) * 100).toFixed(0)}% do total de motoristas`}
           changeType="positive"
           icon={TrendingUp}
-          description="0.25% avg missing rate"
+          description="0.25% de taxa média de faltas"
         />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Cluster Analysis */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Driver Risk Clusters</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Clusters de Risco de Motoristas</h2>
           <div className="space-y-4">
             {getClusterStats()?.map((cluster, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -125,12 +124,12 @@ export default function EnhancedDriversContent() {
                   <div className={`w-4 h-4 rounded-full ${cluster?.color}`}></div>
                   <div>
                     <p className="font-medium text-gray-900">{cluster?.name}</p>
-                    <p className="text-sm text-gray-600">{cluster?.count} drivers</p>
+                    <p className="text-sm text-gray-600">{cluster?.count} motoristas</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-gray-900">{cluster?.avg_missing}</p>
-                  <p className="text-xs text-gray-500">avg missing rate</p>
+                  <p className="text-xs text-gray-500">taxa média de faltas</p>
                 </div>
               </div>
             ))}
@@ -139,22 +138,22 @@ export default function EnhancedDriversContent() {
 
         {/* Top Problematic Drivers */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Top 10 Problematic Drivers</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Top 10 Motoristas Problemáticos</h2>
           <div className="space-y-3 max-h-80 overflow-y-auto">
             {getTopDriversByMissing()?.map((driver, index) => (
               <div key={index} className="flex items-center justify-between p-3 border border-red-200 bg-red-50 rounded-lg">
                 <div>
                   <p className="font-medium text-gray-900">{driver?.driver_name}</p>
-                  <p className="text-sm text-gray-600">{driver?.total_trips} trips completed</p>
+                  <p className="text-sm text-gray-600">{driver?.total_trips} viagens concluídas</p>
                   {driver?.is_outlier && (
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-red-100 text-red-800 mt-1">
-                      Statistical Outlier
+                      Outlier Estatístico
                     </span>
                   )}
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-red-600">{((driver?.missing_rate || 0) * 100).toFixed(1)}%</p>
-                  <p className="text-xs text-gray-500">{driver?.total_missing} items missing</p>
+                  <p className="text-xs text-gray-500">{driver?.total_missing} itens faltantes</p>
                   <p className="text-xs text-gray-500">Cluster {driver?.cluster}</p>
                 </div>
               </div>
@@ -166,51 +165,51 @@ export default function EnhancedDriversContent() {
       {/* Visualizations */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Driver Risk Distribution</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Distribuição de Risco dos Motoristas</h2>
           <DriverPerformanceChart type="cluster" />
           <p className="text-sm text-gray-600 mt-3">
-            Clear separation between high-risk drivers (Cluster 3) and other performance groups
+            Separação clara entre motoristas de alto risco (Cluster 3) e outros grupos de desempenho
           </p>
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Top Drivers by Missing Items</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Principais Motoristas por Itens Faltantes</h2>
           <DriverPerformanceChart type="top-drivers" />
           <p className="text-sm text-gray-600 mt-3">
-            Concentration of issues among a small group of drivers indicates targeted problems
+            A concentração de problemas em um pequeno grupo de motoristas indica questões pontuais
           </p>
         </div>
       </div>
 
       {/* Action Items */}
       <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-6 border border-red-200">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Immediate Driver Actions</h2>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Ações Imediatas para Motoristas</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <h3 className="font-medium text-red-700 mb-2">🚨 High Priority - Outlier Drivers</h3>
+            <h3 className="font-medium text-red-700 mb-2">🚨 Alta Prioridade - Motoristas Outliers</h3>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li>• Suspend {outliers} statistical outliers pending investigation</li>
-              <li>• Mandatory retraining program implementation</li>
-              <li>• Enhanced monitoring with GPS tracking</li>
-              <li>• Photo verification for every delivery</li>
+              <li>• Suspender {outliers} outliers estatísticos enquanto se aguarda investigação</li>
+              <li>• Implementação de programa de retreinamento obrigatório</li>
+              <li>• Monitoramento aprimorado com rastreamento GPS</li>
+              <li>• Verificação por foto para cada entrega</li>
             </ul>
           </div>
           <div>
-            <h3 className="font-medium text-orange-700 mb-2">🟡 Medium Priority - High Risk Cluster</h3>
+            <h3 className="font-medium text-orange-700 mb-2">🟡 Média Prioridade - Cluster de Alto Risco</h3>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li>• Weekly performance reviews for Cluster 3</li>
-              <li>• Implement buddy system with top performers</li>
-              <li>• Increased audit frequency</li>
-              <li>• Performance improvement plans</li>
+              <li>• Revisões semanais de desempenho para o Cluster 3</li>
+              <li>• Implementar sistema de duplas com os melhores desempenhos</li>
+              <li>• Aumento da frequência de auditorias</li>
+              <li>• Planos de melhoria de desempenho</li>
             </ul>
           </div>
           <div>
-            <h3 className="font-medium text-green-700 mb-2">🟢 Best Practices - Top Performers</h3>
+            <h3 className="font-medium text-green-700 mb-2">🟢 Boas Práticas - Melhores Desempenhos</h3>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li>• Document successful strategies from Cluster 1</li>
-              <li>• Mentor program for new drivers</li>
-              <li>• Performance-based incentives</li>
-              <li>• Regional training leadership roles</li>
+              <li>• Documentar estratégias de sucesso do Cluster 1</li>
+              <li>• Programa de mentoria para novos motoristas</li>
+              <li>• Incentivos baseados em desempenho</li>
+              <li>• Funções de liderança em treinamento regional</li>
             </ul>
           </div>
         </div>
