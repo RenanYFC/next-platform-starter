@@ -1,4 +1,4 @@
-// File: C:\Users\renan\Downloads\DashboardWalmart-main\DashboardWalmart-main\DashboardWalmart\app\api\data\route.ts
+// File: C:\Users\renan\Downloads\DashboardWalmart-main\DashboardWalmart-main\DashboardWalmart\next-platform-starter\app\api\data\route.ts
 import * as entry from '../../../../../app/api/data/route.js'
 import type { NextRequest } from 'next/server.js'
 

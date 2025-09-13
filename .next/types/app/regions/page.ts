@@ -1,4 +1,4 @@
-// File: C:\Users\renan\Downloads\DashboardWalmart-main\DashboardWalmart-main\DashboardWalmart\app\regions\page.tsx
+// File: C:\Users\renan\Downloads\DashboardWalmart-main\DashboardWalmart-main\DashboardWalmart\next-platform-starter\app\regions\page.tsx
 import * as entry from '../../../../app/regions/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
